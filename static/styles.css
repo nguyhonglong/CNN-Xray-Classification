@@ -1,0 +1,122 @@
+body {
+    font-family: "Montserrat", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 20px;
+    font-style: normal;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f0f0;
+}
+
+
+.container {
+    text-align: center;
+    background: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+}
+
+h1 {
+    margin-bottom: 20px;
+}
+
+form {
+    margin-bottom: 20px;
+}
+
+input[type="file"] {
+    margin-bottom: 10px;
+}
+
+img {
+    max-width: 500px;
+    margin-top: 20px;
+    min-height: 400px;
+}
+
+button[type="submit"] {
+    background-color: #4CAF50;
+    /* Màu xanh lá */
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 18px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    /* Hiệu ứng bóng đổ */
+    transition: 0.3s;
+    /* Thêm hiệu ứng chuyển tiếp mượt mà */
+    margin-top: 15px ;
+}
+
+button[type="submit"]:hover {
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+
+button[type="file"] {
+    background-color: #4CAF50;
+    /* Màu xanh lá */
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 18px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    /* Hiệu ứng bóng đổ */
+    transition: 0.3s;
+    /* Thêm hiệu ứng chuyển tiếp mượt mà */
+    margin-top: 15px ;
+}
+
+button[type="file"]:hover {
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+
+#drop-area {
+    border: 2px dashed #ccc;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+}
+
+#drop-area.highlight {
+    background-color: #f0f0f0;
+}
+
+#preview {
+    display: none;
+    /* Ẩn ban đầu */
+    margin-top: 10px;
+}
+
+#preview img {
+    max-width: 100%;
+    max-height: 200px;
+}
+
+#history-container {
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+    margin-left: 20px;
+    height: 80vh;
+}
+
+#history-container-wrap{
+    margin-left: 30px;
+    border: #56565653 2px solid;
+    border-radius: 4px;
+}
+
+#history-container img {
+    
+    border-radius: 3px;
+    margin-top: 10px;
+}

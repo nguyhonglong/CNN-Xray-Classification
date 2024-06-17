@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI XRAY</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <div>
+            <h1>AI chuẩn đoán bệnh qua XRAY</h1>
+            <form method="POST" enctype="multipart/form-data">
+                <div id="drop-area">
+                    <p>Kéo thả hoặc tải ảnh lên để dự đoán</p>
+                    <input type="file" name="file" id="file" accept="image/*">
+                    <div id="preview"></div>
+                </div>
+                <button type="submit">Chuẩn đoán</button>
+            </form>
+            {% if prediction %}
+            <h2>Prediction: {{ prediction }}</h2>
+            <img src="{{ url_for('static', filename='uploads/' + image_path.split('/')[-1]) }}" alt="Uploaded Image">
+            {% endif %}
+        </div>
+        <div id="history-container-wrap">
+            <h2>Lịch sử chẩn đoán</h2>
+            <div id="history-container">
+                {% for image_file in image_files %}
+                <img src="{{ url_for('static', filename='uploads/' + image_file) }}" alt="{{ image_file }}">
+                {% endfor %}
+            </div>
+        </div>
+
+    </div>
+    <script>
+        const dropArea = document.getElementById('drop-area');
+        const fileInput = document.getElementById('file');
+
+        // Ngăn chặn hành vi mặc định
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            dropArea.addEventListener(eventName, preventDefaults, false);
+        });
+
+        function preventDefaults(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+
+        // Hiển thị phản hồi trực quan
+        dropArea.addEventListener('dragenter', highlight);
+        dropArea.addEventListener('dragover', highlight);
+        dropArea.addEventListener('dragleave', unhighlight);
+
+        function highlight() {
+            dropArea.classList.add('highlight');
+        }
+
+        function unhighlight() {
+            dropArea.classList.remove('highlight');
+        }
+
+        // Xử lý khi thả tệp
+        dropArea.addEventListener('drop', handleDrop);
+
+        function handleDrop(e) {
+            unhighlight();
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                fileInput.files = files;
+                fileInput.files = files;
+                showFilePreview(files[0]);
+                // (Tùy chọn) Hiển thị tên tệp đã chọn
+            }
+        }
+        fileInput.addEventListener('change', () => {
+            const file = fileInput.files[0];
+            showFilePreview(file);
+        });
+        function showFilePreview(file) {
+            if (file && file.type.startsWith('image/')) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    document.getElementById('preview').innerHTML = ''; // Xóa preview cũ
+                    document.getElementById('preview').appendChild(img);
+                    document.getElementById('preview').style.display = 'block'; // Hiển thị preview
+                    document.getElementById('drop-area').querySelector('p').textContent = file.name;
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // Kích hoạt sự kiện click của input file khi click vào vùng kéo thả
+        dropArea.addEventListener('click', () => {
+            fileInput.click();
+        });
+    </script>
+</body>
+
+</html>
